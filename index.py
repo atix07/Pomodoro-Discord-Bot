@@ -19,8 +19,10 @@ async def on_ready():
 
 #Functions
 async def Timer(min, interaction):
+    count = 0
     while not exit.is_set():
         exit.wait(min)
+        count += 1
         voice_state = interaction.user.voice
         if voice_state is not None:
             vc = await voice_state.channel.connect()
@@ -34,6 +36,7 @@ async def Timer(min, interaction):
             await interaction.user.send('--------------------')
             await interaction.user.send(str(min) + ' minute timer finished!')
             await interaction.user.send('You stopped the timer!')
+            await interaction.user.send('You used Pomodoro timer ' + str(count) + ' time!')
         
         if not exit.is_set():
             exit.wait(10)
@@ -50,9 +53,11 @@ async def Timer(min, interaction):
                 await interaction.user.send('--------------------')
                 await interaction.user.send('10 minute break timer finished!')
                 await interaction.user.send('You stopped the timer!')
+                await interaction.user.send('You used Pomodoro timer ' + str(count) + ' time!')
         else:
             await interaction.user.send('--------------------')
             await interaction.user.send('You stopped the timer!')
+            await interaction.user.send('You used Pomodoro timer ' + str(count) + ' time!')
 
         
 class MinView(View):
